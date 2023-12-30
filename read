@@ -1,0 +1,356 @@
+apt-mark hold linux-image-generic linux-headers-generic && apt-get update && sleep 1 && apt-get upgrade -y && apt-mark unhold linux-image-generic linux-headers-generic
+
+apt-mark hold linux-image-generic linux-headers-generic
+
+apt-get update
+
+apt-get upgrade -y
+
+apt-mark unhold linux-image-generic linux-headers-generic
+
+
+sudo apt-get install -y php7.0 php7.0-mcrypt php7.0-gd php7.0-mbstring php7.0-xml
+
+
+apt-get install apache2
+apt-get install php7.0
+apt-get install nano 
+
+sudo nano /etc/php/7.0/fpm/php.ini
+sudo nano /etc/php/7.0/apache2/php.ini
+
+
+
+max_execution_time = 600
+max_input_time = 1000
+memory_limit = 256MB
+upload_max_filesize = 9000000M
+post_max_size = 9000000M
+max_file_uploads = 100
+----------------------------------------------------------------
+chown -R www-data.www-data /var/www/html/laravel
+chmod -R 755 /var/www/html/laravel
+chmod -R 777 /var/www/html/laravel/storage
+
+sudo nano /var/www/html/laravel/public/.htaccess
+----------------------------------------------------------------
+<IfModule mod_rewrite.c>                                                                                                                      
+    <IfModule mod_negotiation.c>                                                                                                              
+        Options -MultiViews -Indexes                                                                                                          
+    </IfModule>                                                                                                                               
+                                                                                                                                              
+    RewriteEngine On                                                                                                                          
+                                                                                                                                              
+    # Handle Authorization Header                                                                                                             
+    RewriteCond %{HTTP:Authorization} .                                                                                                       
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]                                                                             
+                                                                                                                                              
+    # Redirect Trailing Slashes If Not A Folder...                                                                                            
+    RewriteCond %{REQUEST_FILENAME} !-d                                                                                                       
+    RewriteCond %{REQUEST_URI} (.+)/$                                                                                                         
+    RewriteRule ^ %1 [L,R=301]                                                                                                                
+                                                                                                                                              
+    # Handle Front Controller...                                                                                                              
+    RewriteCond %{REQUEST_FILENAME} !-d                                                                                                       
+    RewriteCond %{REQUEST_FILENAME} !-f                                                                                                       
+    RewriteRule ^ index.php [L]                                                                                                               
+                                                                                                                                              
+    # Http to >> Https         
+    RewriteEngine On                                                 
+    RewriteCond %{HTTPS} !=on 
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]  
+                                                                                                                                   
+</IfModule>   
+
+---------------------------------------------------------------------------
+
+a2enmod ssl 
+service apache2 restart
+
+
+
+openssl req -x509 -nodes -days 14600 -newkey rsa:2048 -keyout /etc/ssl/apache.key -out /etc/ssl/apache.crt
+
+Country Name (2 letter code) \[AU\]:iq
+State or Province Name (full name) \[Some-State\]: mohammed alzobaie
+Locality Name (eg, city) \[\]:kirkuk
+Organization Name (eg, company) \[Internet Widgits Pty Ltd\]:laravelssl
+Organizational Unit Name (eg, section) \[\]:laravelssl
+Common Name (e.g. server FQDN or YOUR name) \[\]: 192.168.1.111
+Email Address \[\]:laravel@admin.com
+
+-----------------------------------------------------------------------------
+nano /etc/apache2/sites-available/default-ssl.conf
+-----------------------------------------------------------------------------
+                                                                                                                                              
+<IfModule mod_ssl.c>                                                                                                                          
+
+ <VirtualHost _default_:443>                                                                                                             
+    ServerName http://192.168.1.111                                                                                                           
+    ServerAlias 192.168.1.111                                                                                                                 
+                                  
+     DocumentRoot /var/www/html/laravel/public                                                                                                  
+                                                                                                                                              
+    SSLEngine On                                                                                                                              
+    SSLCertificateFile /etc/ssl/apache.crt                                                                                                    
+    SSLCertificateKeyFile /etc/ssl/apache.key                                                                                                 
+                                                                                                                                              
+    <Directory /var/www/html/laravel/public>                                                                                                  
+                                                                                                                                              
+        Options Indexes FollowSymLinks                                                                                                        
+        AllowOverride All                                                                                                                     
+        Order allow,deny                                                                                                                      
+        allow from all                                                                                                                        
+    </Directory>                                                                                                                              
+ </VirtualHost>      
+ 
+ </IfModule>      
+ 
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet     
+
+ -----------------------------------------------------------------------------------  
+
+cd /etc/apache2/sites-available/
+
+
+a2ensite default-ssl.conf
+systemctl reload apache2
+
+apachectl configtest
+apache2ctl configtest
+
+
+ 
+systemctl restart apache2.service
+
+service apache2 restart
+
+--------------------------------------------------------------------------
+
+apt-get install curl
+curl https://mediapro.share
+
+nano /etc/apache2/mods-enabled/dir.conf
+
+<IfModule mod_dir.c>
+    DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+
+
+-----------------------------------------------------------------------
+
+service apache2 restart
+																في حالة يطلع خطاء
+pidof apache2
+kill -9 <pid>
+kill <pid>
+service apache2 start
+-------------------------------------------------------------------------
+
+auto lo
+iface lo inet loopback
+
+auto eno1
+iface eno1 inet static
+address 133.133.133.3
+netmask 255.255.255.0
+gateway 133.133.133.1
+dns-nameservers 133.133.133.1 8.8.8.8
+
+sudo ifdown eno1 && sudo ifup -v eno1
+-------------------------------------------------------------------------
+apt-get install mysql-server php7.0-mysql
+
+mysql -u root -p;
+
+
+UPDATE mysql.user SET Password=PASSWORD("imoviesdbase6684802020") WHERE User="root";
+
+imoviesdbase6684802020
+t66313t66313t66313t66313
+
+INSERT INTO defenses (sos_title, show_days, created_at, updated_at) VALUES ('test', '900', '2023-03-26  6:44:54', '2023-03-26  6:44:54');
+
+
+
+CREATE DATABASE teckit;
+
+export اخراج قاعدة بيانات
+mysqldump -u root -p media_pro_202094dbase > media_pro_202094dbase.sql
+
+CTRL+D
+
+inport ادخال قاعدة بيانات
+mysql -u root -p media_pro_202094dbase < /var/www/html/laravel/media_pro_202094dbase.sql
+
+USE media_pro_202094dbase;
+
+SHOW DATABASE;
+
+SHOW TABLES;
+
+-------------------------------------------------------------------------
+UPDATE user SET plugin='t663130000ms' WHERE User='root';
+
+
+Error: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+
+-											---------------في حالة ظهور خطاء------------------------ 
+ERROR 2002 (HY000): Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2)
+
+-											----------------التفقد المشكله  ----------------
+systemctl stop mysql
+
+mysqld_safe --skip-grant-tables --skip-networking &
+-													-----------------الحل ----------------
+mkdir -p /var/run/mysqld
+chown mysql:mysql /var/run/mysqld
+
+mysqld_safe --skip-grant-tables --skip-networking &
+
+Output خروج او ظهور بهذا الشكل
+
+2019-08-25T15:33:49.404761Z mysqld_safe Logging to syslog.
+2019-08-25T15:33:49.411891Z mysqld_safe Logging to '/var/log/mysql/error.log'.
+2019-08-25T15:33:49.443922Z mysqld_safe Starting mysqld daemon with databases from /var/lib/mysql
+2019-08-25T15:33:49.992471Z mysqld_safe mysqld from pid file /var/run/mysqld/mysqld.pid ended
+
+
+
+########## This amazingly worked.
+
+/etc/init.d/mysql stop
+service mysql stop
+
+/etc/init.d/mysql start
+service mysql start
+
+---------------------------laravel install ubuntu 18.04----------------------------------------------------
+
+sudo apt-get install -y php7.4 php7.4-mcrypt php7.4-gd php7.4-mbstring php7.4-xml
+sudo apt-get install apache2 libapache2-mod-php7.4
+sudo apt-get install mysql-server php7.4-mysql
+
+---------------------------laravel install ubuntu 16.04----------------------------------------------------
+
+
+sudo apt-get install -y php7.4 php7.4-mcrypt php7.4-gd php7.4-mbstring php7.4-xml
+sudo apt-get install apache2 libapache2-mod-php7.0
+sudo apt-get install mysql-server php7.0-mysql
+
+curl -sS https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+sudo chmod +x /usr/local/bin/composer
+
+cd /var/www/html
+git clone https://github.com/laravel/laravel.git
+
+cd /var/www/html/laravel
+sudo composer install
+
+chown -R www-data.www-data /var/www/html/laravel
+chmod -R 755 /var/www/html/laravel
+chmod -R 777 /var/www/html/laravel/storage
+
+mv .env.example .env
+
+php artisan key:generate
+
+
+nano /etc/apache2/sites-enabled/000-default.conf
+
+<VirtualHost *:80>
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/laravel/public
+
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/html/laravel>
+                AllowOverride All
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+
+sudo service apache2 restart
+
+
+sudo a2enmod rewrite   
+
+php artisan storage:link
+
+
+
+
+
+
+
+
+
+
+cd /etc/apache2/sites-available
+sudo nano laravel.conf
+
+
+
+
+<VirtualHost *:80>
+    ServerName yourdomain.tld
+
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/your-project/public
+
+    <Directory /var/www/html/your-project>
+        AllowOverride All
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+
+
+
+
+
+
+
+
+sudo a2dissite 000-default.conf
+sudo a2ensite laravel.conf
+sudo a2enmod rewrite
+sudo service apache2 restart
+
+----------------------------------------------------------------------------------------------
+
+scp -r /home/mohammed/laravel mohammedsafaa@192.168.250.242:/var/www/html/
+
+scp -r /home/mohammed/ticket-systems.sql mohammedsafaa@192.168.250.242:/var/www/html/
+
+
+scp -r /home/mohammed/Music/laravel mohammedsafaa@10.100.100.67:/var/www/html/
+
+
+
+
+--------------------------------نقل الملفات-------------------------------------------------------------
+
+scp -r /home/mohammed/laravel mohammed@185.124.148.166:/var/www/html/
+
+
+scp -r /var/www/html/laravel mohammed@192.168.1.103:/var/www/html/
+
+--------------------------------server to serve --------------------------------
+
+scp mohammed@185.124.148.166:/var/www/html/ mohammed@185.124.148.166:/var/www/html/
+
+
+scp mohammed@192.168.1.111:/var/www/html/ mohammed@192.168.1.103:/var/www/html/
+
+-------------------------------------------------------
